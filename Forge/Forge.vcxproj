@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -74,6 +74,22 @@
     <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <IncludePath>$(JAVA_HOME)include;$(JAVA_HOME)include\win32;$(SolutionDir)libraries;$(IncludePath)</IncludePath>
+    <LibraryPath>$(JAVA_HOME)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>$(JAVA_HOME)include;$(JAVA_HOME)include\win32;$(SolutionDir)libraries;$(IncludePath)</IncludePath>
+    <LibraryPath>$(JAVA_HOME)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <IncludePath>$(JAVA_HOME)include;$(JAVA_HOME)include\win32;$(SolutionDir)libraries;$(IncludePath)</IncludePath>
+    <LibraryPath>$(JAVA_HOME)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+    <IncludePath>$(JAVA_HOME)include;$(JAVA_HOME)include\win32;$(SolutionDir)libraries;$(IncludePath)</IncludePath>
+    <LibraryPath>$(JAVA_HOME)lib;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -91,12 +107,13 @@
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableSpecificWarnings>4005;5106</DisableSpecificWarnings>
+      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>Onecore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Onecore.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -125,6 +142,8 @@
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableSpecificWarnings>4005;5106</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -132,7 +151,7 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>Onecore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Onecore.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -155,12 +174,13 @@
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableSpecificWarnings>4005;5106</DisableSpecificWarnings>
+      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>Onecore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Onecore.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
@@ -189,6 +209,8 @@
       <TreatAngleIncludeAsExternal>true</TreatAngleIncludeAsExternal>
       <ExternalWarningLevel>TurnOffAllWarnings</ExternalWarningLevel>
       <DisableSpecificWarnings>4005;5106</DisableSpecificWarnings>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+      <DisableAnalyzeExternal>true</DisableAnalyzeExternal>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -196,17 +218,43 @@
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>false</GenerateDebugInformation>
       <EnableUAC>false</EnableUAC>
-      <AdditionalDependencies>Onecore.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>Onecore.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <Manifest>
       <EnableDpiAwareness>PerMonitorHighDPIAware</EnableDpiAwareness>
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="main.cppm" />
-    <ClCompile Include="sdk.cppm" />
+    <ClCompile Include="..\libraries\buffer.c" />
+    <ClCompile Include="..\libraries\hde\hde32.c" />
+    <ClCompile Include="..\libraries\hde\hde64.c" />
+    <ClCompile Include="..\libraries\hook.c" />
+    <ClCompile Include="..\libraries\trampoline.c" />
+    <ClCompile Include="class_loader.cpp" />
+    <ClCompile Include="definetion.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="monitor.cpp" />
+    <ClCompile Include="report.cpp" />
+    <ClCompile Include="sdk.cpp" />
+    <ClCompile Include="util.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\libraries\buffer.h" />
+    <ClInclude Include="..\libraries\hde\hde32.h" />
+    <ClInclude Include="..\libraries\hde\hde64.h" />
+    <ClInclude Include="..\libraries\hde\pstdint.h" />
+    <ClInclude Include="..\libraries\hde\table32.h" />
+    <ClInclude Include="..\libraries\hde\table64.h" />
+    <ClInclude Include="..\libraries\MinHook.h" />
+    <ClInclude Include="..\libraries\mixins.hpp" />
+    <ClInclude Include="..\libraries\trampoline.h" />
+    <ClInclude Include="class_loader.hpp" />
+    <ClInclude Include="definetion.hpp" />
+    <ClInclude Include="monitor.hpp" />
+    <ClInclude Include="report.hpp" />
+    <ClInclude Include="sdk.hpp" />
+    <ClInclude Include="util.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets">
-  </ImportGroup>
+  <ImportGroup Label="ExtensionTargets" />
 </Project>
