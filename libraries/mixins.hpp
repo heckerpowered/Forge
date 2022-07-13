@@ -343,7 +343,7 @@ namespace mixins
 								 MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT), reinterpret_cast<char*>(&buffer), 0, nullptr) };
 
 		char const* back{ buffer + size - 1 };
-		while (size && std::isspace(*back))
+		while (size && std::isspace(static_cast<unsigned char>(*back)))
 		{
 			--size;
 			--back;

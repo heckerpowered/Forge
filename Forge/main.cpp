@@ -6,7 +6,7 @@
 #include "report.hpp"
 #include "monitor.hpp"
 
-bool DllMain(const HMODULE module, const std::uint32_t call_reason, void* reserved [[maybe_unused]] ) noexcept
+bool DllMain(HMODULE const module, std::uint32_t const  call_reason, void const* reserved [[maybe_unused]] ) noexcept
 {
 	DisableThreadLibraryCalls(module);
 
@@ -15,27 +15,25 @@ bool DllMain(const HMODULE module, const std::uint32_t call_reason, void* reserv
 		return false;
 	}
 
-	std::thread([&module]
+	try
 	{
-		try
+		if (!sdk::initialize())
 		{
-			sdk::initialize_reporter();
-
-			if (!sdk::initialize())
-			{
-				sdk::report_error("Failed to initialize sdk");
-			}
-
-			if (!sdk::initialize_monitor())
-			{
-				sdk::report_error("Failed to initialize monitor");
-			}
+			sdk::report_error("Failed to initialize sdk");
+			return false;
 		}
-		catch (std::exception const& exception)
+
+		if (!sdk::initialize_monitor())
 		{
-			sdk::report_error(exception.what());
+			sdk::report_error("Failed to initialize monitor");
+			return false;
 		}
-	}).detach();
+	}
+	catch (std::exception const& exception)
+	{
+		sdk::report_error(exception.what());
+		return false;
+	}
 
 	return true;
 }

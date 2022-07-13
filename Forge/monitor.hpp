@@ -1,11 +1,11 @@
 #pragma once
 
 #include <Windows.h>
-#include <MinHook.h>
 #include <iostream>
 #include "report.hpp"
 #include "definetion.hpp"
 #include "util.hpp"
+#include "console.hpp"
 
 namespace sdk
 {
